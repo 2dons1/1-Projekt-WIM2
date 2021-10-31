@@ -1,7 +1,7 @@
 {
   "name": "1-projekt-wim2",
   "version": "1.0.0",
-  "description": "",
+  "description": "1 Projekt iz WIM2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
