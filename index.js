@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const path = require('path')
-const PORT = process.env.PORT || 80
+const PORT = process.env.PORT || 3000
 var TOKEN =  process.env.TOKEN
 
 express()
