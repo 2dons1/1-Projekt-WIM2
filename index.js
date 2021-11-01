@@ -1,6 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 80
+const TOKEN =  process.env.TOKEN
 
 express()
   .get('/', (req, res) => res.send("Ovo je naslovna stranica projekta, testiranje"))
