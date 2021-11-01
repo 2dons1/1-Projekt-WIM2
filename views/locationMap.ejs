@@ -9,9 +9,40 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
   <title>1.Projekt - dd51028</title>
+  <script>
+    var x = document.getElementById("map");
+
+    function generateMap() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(init);
+      } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function init(position) {
+      const latitude  = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      var mymap = L.map('map').setView([latitude, longitude], 18);
+      var token = "<%=token%>" // TODO: Visible in inspect.
+
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 20,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: token // 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
+      }).addTo(mymap);
+      var marker1 = L.marker([latitude, longitude]).addTo(mymap);
+      marker1.bindPopup("<b>User: Ja</b><br><b>Latitude: " + latitude + "</b><br><b>Longitude: " + longitude + "</b><br>").openPopup();
+    }
+  </script>
+
 </head>
 
-<body>
+<body onload="generateMap();">
   
 
   <h1> 1. Projekt iz "Napredni razvoj programske potpore za web" </h1>
@@ -24,19 +55,6 @@
   <div class="auth">
     <div id="map" style="height: 500px;"></div>
   </div>
-
-  <script>
-      var mymap = L.map('map').setView([45.79, 15.93], 18);
-
-      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 20,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
-    }).addTo(mymap);
-  </script>
   
 </body>
 </html>
