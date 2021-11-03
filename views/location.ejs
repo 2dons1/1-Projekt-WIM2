@@ -39,7 +39,6 @@
       marker1.bindPopup("<b>User: Ja</b><br><b>Latitude: " + latitude + "</b><br><b>Longitude: " + longitude + "</b><br>").openPopup();
     }
   </script>
-
 </head>
 
 <body onload="generateMap();">
@@ -48,14 +47,30 @@
   <h1> 1. Projekt iz "Napredni razvoj programske potpore za web" </h1>
   <h2> Author: Dorian Dončević(0036510282) </h2>
   <h3> Fer Username: dd510282 </h3>
-  <h4> Prikaz lokacije na karti </h4>
 
   <p>Sve ispod ovog teksta vide samo ulogirani korisnici</p>
 
-  <div class="auth">
-    <div id="map" style="height: 500px;"></div>
-  </div>
+  <% if (auth) { %>
+    <div id="auth">
   
+      <hr>
+      <h2>Prikaz brojčane vrijednoste trenutne lokacije</h2>
+        <p>Klikni dugme kako bi otkrio di si!</p>
+        <button onclick="getLocation()">Pronadi Me!</button>
+        <p id="location"></p>
+      <hr>
+      <h2>Prikaz lokacije na karti</h2>
+      <div id="map" style="height: 500px;"></div>
+      <hr>
+  
+    </div>
+    <% } %>
+    <% if (!auth) { %>
+      <p>Nemate pravo pregledati ovaj sadržaj.</p>
+      <p><a href="<%=link%>">Login</a></p>
+    <% } %>
+
+    <script src="geolocation.js"></script>
 </body>
 </html>
 

@@ -16,7 +16,8 @@
 
   <p>Sve ispod ovog teksta vide samo ulogirani korisnici</p>
 
-  <div class="auth">
+  <% if (auth) { %>
+  <div id="auth">
 
     <hr>
     <h2>Prikaz brojčane vrijednoste trenutne lokacije</h2>
@@ -26,6 +27,11 @@
     <hr>
 
   </div>
+  <% } %>
+  <% if (!auth) { %>
+    <p>Nemate pravo pregledati ovaj sadržaj.</p>
+    <p><a href="<%=link%>">Login</a></p>
+  <% } %>
 
   <script src="geolocation.js"></script>
   

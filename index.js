@@ -20,13 +20,7 @@ express()
   )
   .set("view engine", "ejs")
   .get('/', function(req, res){
-    res.send(req.oidc.isAuthenticated() ? 'Logged In' : 'Logged Out');
-  })
-  .get('/locationMap', function(req, res){
-    res.render("locationMap", {token: TOKEN});
-  })
-  .get('/locationText', function(req, res){
-    res.render("locationText");
+    res.render("location", {auth: req.oidc.isAuthenticated(), link: baseURL + '/login', token: TOKEN});
   })
   .get('/geolocation.js', function(req, res){
     res.sendFile(path.join(__dirname, 'views/geolocation.js'));
