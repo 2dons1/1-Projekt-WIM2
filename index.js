@@ -3,7 +3,7 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 3000
 const TOKEN =  process.env.TOKEN
-const baseURL = process.env.APP_URL || "http://localhost:3000"
+const baseURL = process.env.APP_URL || "http://localhost:3000/"
 const { auth, requiresAuth } = require('express-openid-connect');
 
 express()
@@ -20,7 +20,7 @@ express()
   )
   .set("view engine", "ejs")
   .get('/', function(req, res){
-    res.render("location", {auth: req.oidc.isAuthenticated(), link: baseURL + '/login', token: TOKEN});
+    res.render("location", {auth: req.oidc.isAuthenticated(), link: baseURL + 'login', token: TOKEN});
   })
   .get('/geolocation.js', function(req, res){
     res.sendFile(path.join(__dirname, 'views/geolocation.js'));
