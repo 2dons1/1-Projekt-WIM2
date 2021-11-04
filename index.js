@@ -39,6 +39,14 @@ express()
   .get('/location_map', function(req, res){
     res.render("location_map");
   })
+  .get('/user_login', requiresAuth(), function(req, res){
+    res.render("user_login", {
+      nickname: req.oidc.user.nickname, 
+      email: req.oidc.user.email,
+      auth: req.oidc.isAuthenticated(),  
+      linkOUT: baseURL + 'logout'
+    })
+  })
   .get('/private', requiresAuth(), function(req, res){
     res.send(JSON.stringify(req.oidc.user))
   })
