@@ -20,10 +20,24 @@ express()
   )
   .set("view engine", "ejs")
   .get('/', function(req, res){
-    res.render("location", {user: req.oidc.user, auth: req.oidc.isAuthenticated(), linkIN: baseURL + 'login', linkOUT: baseURL + 'logout', token: TOKEN});
+    res.render("location", {
+        user: req.oidc.user, 
+        auth: req.oidc.isAuthenticated(), 
+        linkIN: baseURL + 'login', 
+        linkOUT: baseURL + 'logout', 
+        token: TOKEN});
   })
-  .get('/geolocation.js', function(req, res){
-    res.sendFile(path.join(__dirname, 'views/geolocation.js'));
+  .get('/scripts/location_text.js', function(req, res){
+    res.sendFile(path.join(__dirname, 'scripts/location_text.js'));
+  })
+  .get('/scripts/location_map.js', function(req, res){
+    res.sendFile(path.join(__dirname, 'scripts/location_map.js'));
+  })
+  .get('/location_text', function(req, res){
+    res.render("location_text");
+  })
+  .get('/location_map', function(req, res){
+    res.render("location_map");
   })
   .get('/private', requiresAuth(), function(req, res){
     res.send(JSON.stringify(req.oidc.user))

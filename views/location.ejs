@@ -9,6 +9,7 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
   <title>1.Projekt - dd51028</title>
+
   <script>
     var x = document.getElementById("map");
     var db = openDatabase('mydb', '1.0', 'Lokacije', 2 * 1024 * 1024);
@@ -20,26 +21,16 @@
         navigator.geolocation.getCurrentPosition(init);
         console.log("Zatrazen je pristup lokaciji");
       } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
+        x.innerHTML = "Ovaj browser nema mogucnost lokacije!";
       }
     }
 
-    // Ova funkcija bi trebala citat iz baze(dohvat zadnjih pet prijava)
-    function getLogins(){
-      return [
-              {lat: 45.546206, long: 18.700875, user: "Dorian"},
-              {lat: 45.370919, long: 14.350810, user: "Filip"}, 
-              {lat: 45.899927, long: 16.864966, user: "Vrba"}, 
-              {lat: 43.499808, long: 16.472835, user: "Sosko"}, 
-              {lat: 45.143058, long: 16.279266, user: "Marin"}
-            ]
-    }
     function select(polje){
       db.transaction(function (tx) {
-        tx.executeSql('SELECT * FROM LOGS4 ORDER BY ID DESC LIMIT 5 ', [], function (tx, results) {
+        tx.executeSql('SELECT * FROM LOGS5 ORDER BY ID DESC LIMIT 5 ', [], function (tx, results) {
           var len = results.rows.length, i;
           for (i = 0; i < len; i++) {
-            var marker = {"lat": results.rows.item(i).lat, "long": results.rows.item(i).long, "user": results.rows.item(i).username};
+            var marker = {"lat": results.rows.item(i).lat, "long": results.rows.item(i).long, "user": results.rows.item(i).username, "v": results.rows.item(i).vrijeme};
             polje.push(marker);
           }
         }, null);
@@ -49,12 +40,13 @@
 
     function insert(username, lat, long){
       console.log(username + ", " + lat + ", " + long);
+      var myDate = new Date(Date.now());
+      console.log(myDate.toLocaleString());
 
       db.transaction(function (tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS4 (id integer primary key autoincrement, username, lat, long)');
-        tx.executeSql("INSERT INTO LOGS4 (username, lat, long) VALUES ('" + username + "', '" + lat + "', '" + long + "')");
+        tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS5 (id integer primary key autoincrement, username, lat, long, vrijeme)');
+        tx.executeSql("INSERT INTO LOGS5 (username, lat, long, vrijeme) VALUES ('" + username + "', '" + lat + "', '" + long + "', '" + Date.now() + "')");
       })
-      
     }
 
     function init(position) {
@@ -66,12 +58,8 @@
       // Karta ce se sada ucitat, pokupi usera i njegovu lokaciju, spremi to u bazu.
       insert(username.innerHTML, latitude, longitude);
 
-      // Nakon sto si usera spremio u bazu pokupi zadnjih 5 ntorki iz baze.
-      // var m = [];
-      // var markers1 = select(m);
-      // console.log(JSON.stringify(markers1));
-
-      var mymap = L.map('map').setView([latitude, longitude], 18);
+      // Pozicija i zoom da se vidi cijela Hrvatska.
+      var mymap = L.map('map').setView([45.032022, 16.285627], 7);
       var token = "<%=token%>" // TODO: Visible in inspect.
 
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -85,12 +73,10 @@
       // Dodaj zadnjih 5 logina. markers
       console.log(markeriTest);
       for (let i = 0; i < markeriTest.length; i++) {
+        var myDate = new Date(+markeriTest[i]['v']);
         var marker = L.marker([markeriTest[i]['lat'], markeriTest[i]['long']]).addTo(mymap);
-        marker.bindPopup("<b>User: " + markeriTest[i]['user'] + "</b><br><b>Latitude: " + markeriTest[i]['lat'] + "</b><br><b>Longitude: " + markeriTest[i]['long'] + "</b><br>");
+        marker.bindPopup("<b>User: " + markeriTest[i]['user'] + "</b><br><b>Latitude: " + markeriTest[i]['lat'] + "</b><br><b>Longitude: " + markeriTest[i]['long'] + "</b><br><b>Vrijeme: " + myDate.toLocaleString() + "</b><br>");
       }
-      // Dodaj svoju trenutnu lokaciju.
-      var marker1 = L.marker([latitude, longitude]).addTo(mymap);
-      marker1.bindPopup("<b>User: Ja</b><br><b>Latitude: " + latitude + "</b><br><b>Longitude: " + longitude + "</b><br>");
     }
   </script>
 </head>
