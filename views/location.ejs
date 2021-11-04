@@ -89,8 +89,8 @@
         marker.bindPopup("<b>User: " + markeriTest[i]['user'] + "</b><br><b>Latitude: " + markeriTest[i]['lat'] + "</b><br><b>Longitude: " + markeriTest[i]['long'] + "</b><br>");
       }
       // Dodaj svoju trenutnu lokaciju.
-      // var marker1 = L.marker([latitude, longitude]).addTo(mymap);
-      // marker1.bindPopup("<b>User: Ja</b><br><b>Latitude: " + latitude + "</b><br><b>Longitude: " + longitude + "</b><br>");
+      var marker1 = L.marker([latitude, longitude]).addTo(mymap);
+      marker1.bindPopup("<b>User: Ja</b><br><b>Latitude: " + latitude + "</b><br><b>Longitude: " + longitude + "</b><br>");
     }
   </script>
 </head>
