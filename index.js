@@ -33,19 +33,53 @@ express()
   .get('/scripts/location_map.js', function(req, res){
     res.sendFile(path.join(__dirname, 'scripts/location_map.js'));
   })
+  .get('/scripts/all.js', function(req, res){
+    res.sendFile(path.join(__dirname, 'scripts/all.js'));
+  })
   .get('/location_text', function(req, res){
     res.render("location_text");
   })
   .get('/location_map', function(req, res){
     res.render("location_map");
   })
-  .get('/user_login', requiresAuth(), function(req, res){
-    res.render("user_login", {
-      nickname: req.oidc.user.nickname, 
-      email: req.oidc.user.email,
-      auth: req.oidc.isAuthenticated(),  
-      linkOUT: baseURL + 'logout'
-    })
+  .get('/user_login', function(req, res){
+    
+    if(req.oidc.isAuthenticated()){
+      res.render("user_login", {
+        nickname: req.oidc.user.nickname, 
+        email: req.oidc.user.email,
+        auth: req.oidc.isAuthenticated(),
+        linkIN: baseURL + 'login',  
+        linkOUT: baseURL + 'logout'
+      })
+    }
+    else{
+      res.render("user_login", {
+        auth: req.oidc.isAuthenticated(),
+        linkIN: baseURL + 'login',  
+        linkOUT: baseURL + 'logout'
+      })
+    }
+    
+  })
+  .get('/all', function(req, res){
+    if(req.oidc.isAuthenticated()){
+      res.render("all", {
+        nickname: req.oidc.user.nickname, 
+        email: req.oidc.user.email,
+        auth: req.oidc.isAuthenticated(),
+        linkIN: baseURL + 'login',  
+        linkOUT: baseURL + 'logout',
+        timer: req.oidc.user.updated_at
+      })
+    }
+    else{
+      res.render("all", {
+        auth: req.oidc.isAuthenticated(),
+        linkIN: baseURL + 'login',  
+        linkOUT: baseURL + 'logout'
+      })
+    }
   })
   .get('/private', requiresAuth(), function(req, res){
     res.send(JSON.stringify(req.oidc.user))

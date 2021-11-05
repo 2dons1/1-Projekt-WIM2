@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+  <title>1.Projekt - dd51028</title>
+</head>
+
+<body>
+    <h1> 1. Projekt iz "Napredni razvoj programske potpore za web" </h1>
+    <h2> Author: Dorian Dončević(0036510282) </h2>
+    <h3> Fer Username: dd510282 </h3>
+    <h4> Prikaz brojčane vrijednosti trenutne lokacije + Prikaz lokacije na karti + Prikaz informacije o oznaci na karti + Prijava korisnika </h4>
+
+    <hr>
+    <% if (auth) { %>
+        <p>Uspješno ste se prijavili!</p>
+        <p>Nickname: <%=nickname%></p>
+        <p>Email: <%=email%></p>
+        <p>Login time: <%=timer%></p>
+        <p><a href="<%=linkOUT%>">Logout</a></p>
+        <hr>
+        <p id="location_text"></p>
+        <hr>
+        <div id="map" style="height: 500px;"></div>
+    <% } %>
+    <% if (!auth) { %>
+        <p>Nemate pravo pregledati ovaj sadržaj.</p>
+        <p><a href="<%=linkIN%>">Login</a></p>
+    <% } %>
+    <% if (auth) { %>
+    <script src="scripts/all.js"></script>
+    <% } %>
+</body>
+</html>
+
