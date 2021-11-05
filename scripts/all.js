@@ -15,7 +15,9 @@ function showPosition(position) {
   const time = document.getElementById("login_time");
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
-  
+
+  const urlGet = document.getElementById("get");
+  const urlPost = document.getElementById("post");
   // Ovo treba spucat u bazu.
   console.log(user.innerHTML + "," + time.innerHTML + "," + latitude + "," + longitude);
 
@@ -33,8 +35,46 @@ function showPosition(position) {
         zoomOffset: -1,
         accessToken: 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg' // 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
     }).addTo(mymap);
-  var marker = L.marker([latitude, longitude]).addTo(mymap);
-  marker.bindPopup("Ovo je demo tekst za 'prikaz informacije o oznaci na karti' <hr> Latitude: " + latitude + "<br>" + "Longitude: " + longitude);
+  // var marker = L.marker([latitude, longitude]).addTo(mymap);
+  // marker.bindPopup("User: " + user.innerHTML + "<br>Vrijeme prijave: " +  time.innerHTML + "<br><hr> Latitude: " + latitude + "<br>" + "Longitude: " + longitude);
+
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", urlGet.innerHTML, false );
+  xmlHttp.send( null );
+  const markers = JSON.parse(xmlHttp.responseText);
+
+  let new_json = {"user": user.innerHTML, "time": time.innerHTML, "lat": latitude, "long": longitude};
+  let logged = 0;
+  for (let i = 0; i < markers.length; i++) {
+    if(markers[i]['user'] == new_json['user'] && markers[i]['time'] == new_json['time']){
+        logged = 1;
+        break;
+    }
+  }
+  if(logged == 0){
+    markers[markers.length] = new_json;
+  }  
+
+  for (let i = 0; i < markers.length; i++) {
+    var marker = L.marker([markers[i]['lat'], markers[i]['long']]).addTo(mymap);
+    marker.bindPopup("User: " + markers[i]['user'] + "<br>Vrijeme prijave: " +  markers[i]['time'] + "<br><hr> Latitude: " + markers[i]['lat'] + "<br>" + "Longitude: " + markers[i]['long']);
+  }
+  // TESTIRANJE
+  var data = JSON.stringify(markers);
+  
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) {
+      console.log(this.responseText);
+    }
+  });
+  
+  xhr.open("POST", urlPost.innerHTML);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  
+  xhr.send(data);
 }
 
 function error(){

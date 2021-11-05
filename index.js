@@ -5,6 +5,14 @@ const PORT = process.env.PORT || 3000
 const TOKEN =  process.env.TOKEN
 const baseURL = process.env.APP_URL || "http://localhost:3000/"
 const { auth, requiresAuth } = require('express-openid-connect');
+const fs = require('fs')
+const markers = [
+  {"user": "Dorian", "time": "now", "lat": 45.827444, "long": 16.052198},
+  {"user": "Dominik", "time": "now", "lat": 45.051836, "long": 13.926908},
+  {"user": "Filip", "time": "now", "lat": 45.348563, "long": 14.558573},
+  {"user": "Marin", "time": "now", "lat": 44.100418, "long": 15.328415},
+  {"user": "Dorian", "time": "now", "lat": 42.699758, "long": 18.039312}
+];
 
 express()
   .use(
@@ -18,6 +26,8 @@ express()
       idpLogout: true,
     })
   )
+  .use(express.urlencoded({extended: false}))
+  .use(express.json())
   .set("view engine", "ejs")
   .get('/', function(req, res){
     res.render("location", {
@@ -70,7 +80,10 @@ express()
         auth: req.oidc.isAuthenticated(),
         linkIN: baseURL + 'login',  
         linkOUT: baseURL + 'logout',
-        timer: req.oidc.user.updated_at
+        linkGetMarkeri: baseURL + 'markers',
+        linkPostMarkeri: baseURL + 'test',
+        timer: req.oidc.user.updated_at,
+        markeri: markers
       })
     }
     else{
@@ -83,5 +96,19 @@ express()
   })
   .get('/private', requiresAuth(), function(req, res){
     res.send(JSON.stringify(req.oidc.user))
+  })
+  .get('/markers', function(req, res){
+    res.sendFile(path.join(__dirname, 'data/markers.json'));
+  })
+  .post('/test', function(req, res){
+    res.send(req.body);
+    const finished = (error) => {
+      if(error){
+        console.error(error);
+        return;
+      }
+    }
+    const data = JSON.stringify(req.body, null, 2);
+    fs.writeFile(path.join(__dirname, 'data/markers.json'), data, finished);
   })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
