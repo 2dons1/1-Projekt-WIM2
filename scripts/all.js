@@ -59,22 +59,24 @@ function showPosition(position) {
     var marker = L.marker([markers[i]['lat'], markers[i]['long']]).addTo(mymap);
     marker.bindPopup("User: " + markers[i]['user'] + "<br>Vrijeme prijave: " +  markers[i]['time'] + "<br><hr> Latitude: " + markers[i]['lat'] + "<br>" + "Longitude: " + markers[i]['long']);
   }
-  // TESTIRANJE
-  var data = JSON.stringify(markers);
-  
-  var xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-  
-  xhr.addEventListener("readystatechange", function() {
-    if(this.readyState === 4) {
-      console.log(this.responseText);
-    }
-  });
-  
-  xhr.open("POST", urlPost.innerHTML);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  
-  xhr.send(data);
+  if(logged == 0){
+    // TESTIRANJE
+    var data = JSON.stringify(markers);
+    
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    
+    xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+        console.log(this.responseText);
+        }
+    });
+    
+    xhr.open("POST", urlPost.innerHTML);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    
+    xhr.send(data);
+  }
 }
 
 function error(){

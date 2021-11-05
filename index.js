@@ -29,14 +29,6 @@ express()
   .use(express.urlencoded({extended: false}))
   .use(express.json())
   .set("view engine", "ejs")
-  .get('/testing', function(req, res){
-    res.render("location", {
-        user: req.oidc.user, 
-        auth: req.oidc.isAuthenticated(), 
-        linkIN: baseURL + 'login', 
-        linkOUT: baseURL + 'logout', 
-        token: TOKEN});
-  })
   .get('/scripts/location_text.js', function(req, res){
     res.sendFile(path.join(__dirname, 'scripts/location_text.js'));
   })
@@ -93,9 +85,6 @@ express()
         linkOUT: baseURL + 'logout'
       })
     }
-  })
-  .get('/private', requiresAuth(), function(req, res){
-    res.send(JSON.stringify(req.oidc.user))
   })
   .get('/markers', function(req, res){
     res.sendFile(path.join(__dirname, 'data/markers.json'));
