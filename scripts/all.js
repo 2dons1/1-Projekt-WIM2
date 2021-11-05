@@ -33,7 +33,7 @@ function showPosition(position) {
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1,
-        accessToken: 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg' // 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
+        accessToken: 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
     }).addTo(mymap);
   // var marker = L.marker([latitude, longitude]).addTo(mymap);
   // marker.bindPopup("User: " + user.innerHTML + "<br>Vrijeme prijave: " +  time.innerHTML + "<br><hr> Latitude: " + latitude + "<br>" + "Longitude: " + longitude);
@@ -56,11 +56,14 @@ function showPosition(position) {
   }  
 
   for (let i = 0; i < markers.length; i++) {
-    var marker = L.marker([markers[i]['lat'], markers[i]['long']]).addTo(mymap);
-    marker.bindPopup("User: " + markers[i]['user'] + "<br>Vrijeme prijave: " +  markers[i]['time'] + "<br><hr> Latitude: " + markers[i]['lat'] + "<br>" + "Longitude: " + markers[i]['long']);
+    if(i == 4){ // Samo zadnjih 5 prijava.
+        break;
+    }
+    var marker = L.marker([markers[markers.length-1-i]['lat'], markers[markers.length-1-i]['long']]).addTo(mymap);
+    marker.bindPopup("User: " + markers[markers.length-1-i]['user'] + "<br>Vrijeme prijave: " +  markers[markers.length-1-i]['time'] + "<br><hr> Latitude: " + markers[markers.length-1-i]['lat'] + "<br>" + "Longitude: " + markers[markers.length-1-i]['long']);
   }
+  
   if(logged == 0){
-    // TESTIRANJE
     var data = JSON.stringify(markers);
     
     var xhr = new XMLHttpRequest();
