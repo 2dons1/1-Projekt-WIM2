@@ -29,7 +29,7 @@ express()
   .use(express.urlencoded({extended: false}))
   .use(express.json())
   .set("view engine", "ejs")
-  .get('/', function(req, res){
+  .get('/testing', function(req, res){
     res.render("location", {
         user: req.oidc.user, 
         auth: req.oidc.isAuthenticated(), 
@@ -72,7 +72,7 @@ express()
     }
     
   })
-  .get('/all', function(req, res){
+  .get('/', function(req, res){
     if(req.oidc.isAuthenticated()){
       res.render("all", {
         nickname: req.oidc.user.nickname, 
