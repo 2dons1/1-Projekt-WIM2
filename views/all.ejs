@@ -20,9 +20,9 @@
     <hr>
     <% if (auth) { %>
         <p>Uspješno ste se prijavili!</p>
-        <p>Nickname: <%=nickname%></p>
-        <p>Email: <%=email%></p>
-        <p>Login time: <%=timer%></p>
+        <p id="user_name"><%=nickname%></p>
+        <p><%=email%></p>
+        <p id="login_time"><%=timer%></p>
         <p><a href="<%=linkOUT%>">Logout</a></p>
         <hr>
         <p id="location_text"></p>

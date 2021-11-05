@@ -10,9 +10,14 @@ if (navigator.geolocation) {
 }
 
 function showPosition(position) {
-
+  
+  const user = document.getElementById("user_name");
+  const time = document.getElementById("login_time");
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
+  
+  // Ovo treba spucat u bazu.
+  console.log(user.innerHTML + "," + time.innerHTML + "," + latitude + "," + longitude);
 
   y.innerHTML = 
   "Geografska širina: " + latitude + "<br>" + 
