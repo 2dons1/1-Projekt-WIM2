@@ -25,7 +25,7 @@ function showPosition(position) {
   "Geografska širina: " + latitude + "<br>" + 
   "Geografska dužina: " + longitude + "<br>";
 
-  var mymap = L.map('map').setView([latitude, longitude], 13);
+  var mymap = L.map('map').setView([45.032022, 16.285627], 7);
 
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
