@@ -4,7 +4,7 @@ const path = require('path')
 const PORT = process.env.PORT || 3000
 const TOKEN =  process.env.TOKEN
 const baseURL = process.env.APP_URL || "http://localhost:3000/"
-const { auth, requiresAuth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect')
 const fs = require('fs')
 
 express()
@@ -68,7 +68,6 @@ express()
         linkGetMarkeri: baseURL + 'markers',
         linkPostMarkeri: baseURL + 'test',
         timer: req.oidc.user.updated_at,
-        markeri: markers
       })
     }
     else{
@@ -83,7 +82,7 @@ express()
     res.sendFile(path.join(__dirname, 'data/markers.json'));
   })
   .post('/test', function(req, res){
-    // res.send(req.body);
+    res.send(req.body);
     const finished = (error) => {
       if(error){
         console.error(error);
