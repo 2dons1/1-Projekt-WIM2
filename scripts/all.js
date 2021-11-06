@@ -39,7 +39,7 @@ function showPosition(position) {
   // marker.bindPopup("User: " + user.innerHTML + "<br>Vrijeme prijave: " +  time.innerHTML + "<br><hr> Latitude: " + latitude + "<br>" + "Longitude: " + longitude);
 
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", urlGet.innerHTML, false );
+  xmlHttp.open( "GET", urlGet.innerHTML, false);
   xmlHttp.send( null );
   const markers = JSON.parse(xmlHttp.responseText);
 

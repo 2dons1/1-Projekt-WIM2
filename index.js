@@ -6,13 +6,6 @@ const TOKEN =  process.env.TOKEN
 const baseURL = process.env.APP_URL || "http://localhost:3000/"
 const { auth, requiresAuth } = require('express-openid-connect');
 const fs = require('fs')
-const markers = [
-  {"user": "Dorian", "time": "now", "lat": 45.827444, "long": 16.052198},
-  {"user": "Dominik", "time": "now", "lat": 45.051836, "long": 13.926908},
-  {"user": "Filip", "time": "now", "lat": 45.348563, "long": 14.558573},
-  {"user": "Marin", "time": "now", "lat": 44.100418, "long": 15.328415},
-  {"user": "Dorian", "time": "now", "lat": 42.699758, "long": 18.039312}
-];
 
 express()
   .use(
@@ -90,7 +83,7 @@ express()
     res.sendFile(path.join(__dirname, 'data/markers.json'));
   })
   .post('/test', function(req, res){
-    res.send(req.body);
+    // res.send(req.body);
     const finished = (error) => {
       if(error){
         console.error(error);
