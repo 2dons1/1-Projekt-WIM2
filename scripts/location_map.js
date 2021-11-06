@@ -20,7 +20,7 @@ function showPosition(position) {
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1,
-        accessToken: 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg' // 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
+        accessToken: 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
     }).addTo(mymap);
   var marker = L.marker([latitude, longitude]).addTo(mymap);
   marker.bindPopup("Ovo je demo tekst za 'prikaz informacije o oznaci na karti' <hr> Latitude: " + latitude + "<br>" + "Longitude: " + longitude);

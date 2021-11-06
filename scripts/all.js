@@ -18,7 +18,7 @@ function showPosition(position) {
 
   const urlGet = document.getElementById("get");
   const urlPost = document.getElementById("post");
-  // Ovo treba spucat u bazu.
+
   console.log(user.innerHTML + "," + time.innerHTML + "," + latitude + "," + longitude);
 
   y.innerHTML = 
@@ -35,8 +35,6 @@ function showPosition(position) {
         zoomOffset: -1,
         accessToken: 'sk.eyJ1IjoiMmRvbnMiLCJhIjoiY2t2Z2lqdXd6MTlodjJ1bjNsajZ1dWFmaSJ9.tR_rFBw_5v0uSq9sQP7YLg'
     }).addTo(mymap);
-  // var marker = L.marker([latitude, longitude]).addTo(mymap);
-  // marker.bindPopup("User: " + user.innerHTML + "<br>Vrijeme prijave: " +  time.innerHTML + "<br><hr> Latitude: " + latitude + "<br>" + "Longitude: " + longitude);
 
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "GET", urlGet.innerHTML, false);
@@ -56,7 +54,7 @@ function showPosition(position) {
   }  
 
   for (let i = 0; i < markers.length; i++) {
-    if(i == 4){ // Samo zadnjih 5 prijava.
+    if(i == 4){
         break;
     }
     var marker = L.marker([markers[markers.length-1-i]['lat'], markers[markers.length-1-i]['long']]).addTo(mymap);
