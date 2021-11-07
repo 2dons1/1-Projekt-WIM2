@@ -54,7 +54,7 @@ function showPosition(position) {
   }  
 
   for (let i = 0; i < markers.length; i++) {
-    if(i == 4){
+    if(i == 5){
         break;
     }
     var marker = L.marker([markers[markers.length-1-i]['lat'], markers[markers.length-1-i]['long']]).addTo(mymap);
